@@ -7,10 +7,13 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     public static int score;
+
     public static int maximumLeftLanes = 1;
     public static int maximumRightLanes = 1;
-    public static string titleScreenScene = "TitleScreen";
+    public static int distanceBetweenObjects = 5;
     public static float distanceBetweenLanes = 1.5f;
+
+    public static string titleScreenScene = "TitleScreen";
 
     public TextMeshProUGUI scoreText;
 
@@ -27,13 +30,20 @@ public class GameManager : MonoBehaviour
     void FixedUpdate()
     {
         RepopulateCollectablesList();
+        GameObject[] obstaclesList = GameObject.FindGameObjectsWithTag("Obstacle");
+
         // Checking if a collectable has been collected, adding to the score and removing it if so
         foreach (Collectable collectable in collectables)
+        {
             if (collectable.IsCollected())
             {
                 AddScore(collectable.scoreFromCollect);
                 Destroy(collectable.gameObject);
             }
+            foreach (GameObject obstacle in obstaclesList)
+                if (obstacle.transform.position == collectable.transform.position)
+                    Destroy(obstacle.gameObject);
+        }
     }
 
     // Function to repopulate a list of all loaded collectable scripts
