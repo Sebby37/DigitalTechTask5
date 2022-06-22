@@ -11,9 +11,11 @@ public class Collectable : MonoBehaviour
 
     private float initialYvalue;
     private bool collected = false;
+    private float randomRotationOffset;
 
     private void Start()
     {
+        randomRotationOffset = Random.value;
         initialYvalue = transform.position.y;
     }
 
@@ -25,7 +27,7 @@ public class Collectable : MonoBehaviour
 
         // Making the collectable move up and down
         Vector3 tempPosition = transform.position;
-        tempPosition.y = bobHeight * Mathf.Sin(Time.realtimeSinceStartup * bobSpeedMultiplier) + initialYvalue;
+        tempPosition.y = bobHeight * Mathf.Sin(Time.realtimeSinceStartup * bobSpeedMultiplier * randomRotationOffset) + initialYvalue;
         transform.position = tempPosition;
     }
 

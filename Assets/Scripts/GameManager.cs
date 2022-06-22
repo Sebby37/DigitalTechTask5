@@ -11,10 +11,11 @@ public class GameManager : MonoBehaviour
     public static int maximumLeftLanes = 1;
     public static int maximumRightLanes = 1;
     public static int distanceBetweenObjects = 5;
-    public static float distanceBetweenLanes = 1.5f;
+    public static float distanceBetweenLanes = 1.75f;
 
     public static string titleScreenScene = "TitleScreen";
 
+    public int scorePerFrame = 10;
     public TextMeshProUGUI scoreText;
 
     private List<Collectable> collectables = new List<Collectable>();
@@ -44,6 +45,9 @@ public class GameManager : MonoBehaviour
                 if (obstacle.transform.position == collectable.transform.position)
                     Destroy(obstacle.gameObject);
         }
+
+        // Adding a fixed score over time
+        AddScore(scorePerFrame);
     }
 
     // Function to repopulate a list of all loaded collectable scripts

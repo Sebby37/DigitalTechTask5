@@ -61,12 +61,13 @@ public class ChunkGenerator : MonoBehaviour
             if (Random.value <= chanceToGenerateObject)
             {
                 // Calculating the lane and row the obstacles are to be placed in
-                float obstacleLane;
-                float obstacleRow;
-                while (true)
+                float obstacleLane = 0;
+                float obstacleRow = 0;
+                bool failed = false;
+                for (int tries = 0; tries < 50; tries++) // Trying 50 times to generate an object that does not intersect with another
                 {
-                    obstacleLane = new float[] { -1.5f, 0, 1.5f }[Random.Range(0, 3)];
-                    obstacleRow = new float[] { -10, -5, 0, 5, 10 }[Random.Range(0, 5)];
+                    obstacleLane = new float[] { -1.75f, 0, 1.75f }[Random.Range(0, 3)];
+                    obstacleRow = new float[] { -10, -5, 0, 5 }[Random.Range(0, 4)];
 
                     Vector2 tempPosition = new Vector2(obstacleLane, obstacleRow);
                     if (!generatedObjects.Contains(tempPosition))
@@ -74,8 +75,10 @@ public class ChunkGenerator : MonoBehaviour
                         generatedObjects.Add(tempPosition);
                         break;
                     }
+                    else
+                        if (tries >= 49) failed = true;
                 }
-                Debug.Log($"{generatedObjects.Count} {maxObjectsInChunk}");
+                if (failed) continue;
                 
                 if (Random.value <= 0.5f)
                 {
@@ -85,7 +88,7 @@ public class ChunkGenerator : MonoBehaviour
                     collectableToGenerate = Instantiate(collectableToGenerate, Vector3.zero, Quaternion.identity);
                     collectableToGenerate.transform.SetParent(chunk.transform);
 
-                    collectableToGenerate.transform.localPosition = new Vector3(obstacleRow, 0.75f, obstacleLane);
+                    collectableToGenerate.transform.localPosition = new Vector3(obstacleRow, 0, obstacleLane);
                 }
                 else
                 {
@@ -95,7 +98,7 @@ public class ChunkGenerator : MonoBehaviour
                     obstacleToGenerate = Instantiate(obstacleToGenerate, Vector3.zero, Quaternion.identity);
                     obstacleToGenerate.transform.SetParent(chunk.transform);
 
-                    obstacleToGenerate.transform.localPosition = new Vector3(obstacleRow, 0.75f, obstacleLane);
+                    obstacleToGenerate.transform.localPosition = new Vector3(obstacleRow, 0, obstacleLane);
                 }
             }
         }

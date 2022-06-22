@@ -7,7 +7,9 @@ public class WolfMovement : MonoBehaviour
     [Header("Movement")]
     public float movementSpeed;
     public float jumpForce;
-    [Range(0f, 1f)] public float airMovementMultiplier = 0.5f; 
+    [Range(0f, 1f)] public float airMovementMultiplier = 0.5f;
+    public float movementSpeedIncrease = 1.05f;
+    public float maximumMovementSpeed = 10;
 
     private Rigidbody rb;
     private Animator animator;
@@ -53,6 +55,8 @@ public class WolfMovement : MonoBehaviour
             currentLane++;
         }
 
+        if (rb.velocity.y < 0) Physics.gravity = new Vector3(0, -9.8f * 2, 0);
+
         // Clamping the values to the maximum left and right lanes
         currentLane = Mathf.Clamp(currentLane, -GameManager.maximumLeftLanes, GameManager.maximumRightLanes);
 
@@ -69,6 +73,7 @@ public class WolfMovement : MonoBehaviour
         {
             animator.SetTrigger("Land");
             canJump = true;
+            Physics.gravity = new Vector3(0, -9.8f, 0);
         }
         else if (collision.gameObject.CompareTag("Obstacle"))
         {
@@ -82,6 +87,10 @@ public class WolfMovement : MonoBehaviour
     {
         if (other.gameObject.GetComponent<Collectable>() != null)
         {
+            // Increasing the movement speed based on how many collectables have been collected
+            if (movementSpeed < maximumMovementSpeed) movementSpeed *= movementSpeedIncrease;
+            else movementSpeed = maximumMovementSpeed;
+
             Collectable collectable = other.gameObject.GetComponent<Collectable>();
             collectable.Collect();
         }
