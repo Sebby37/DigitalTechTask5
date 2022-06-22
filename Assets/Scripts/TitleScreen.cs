@@ -6,12 +6,13 @@ using UnityEngine.SceneManagement;
 
 public class TitleScreen : MonoBehaviour
 {
-    public Animator animator;
+    public Animator wolfAnimator;
+    public Animator cameraAnimator;
+    public GameObject mainCanvas;
     public float howlInterval = 15f;
     public string gameSceneName;
     public TextMeshProUGUI scoreText;
 
-    [SerializeField]
     private float elapsed;
 
     // Start is called before the first frame update
@@ -28,7 +29,7 @@ public class TitleScreen : MonoBehaviour
         // Playing the howl animation at a set interval with a bit of randomness
         if (elapsed > howlInterval + (0.5f - Random.value))
         {
-            animator.SetTrigger("Howl");
+            wolfAnimator.SetTrigger("Howl");
             elapsed = 0;
         }
     }
@@ -48,5 +49,22 @@ public class TitleScreen : MonoBehaviour
     {
         PlayerPrefs.SetInt("HighScore", 0);
         RefreshHighScore();
+    }
+
+    public void ToHelpScreen()
+    {
+        cameraAnimator.SetTrigger("ToHelpScreen");
+        mainCanvas.SetActive(false);
+    }
+
+    public void FromHelpToTitleScreen()
+    {
+        cameraAnimator.SetTrigger("FromHelpToTitleScreen");
+        mainCanvas.SetActive(true);
+    }
+
+    public void QuitGame()
+    {
+        Application.Quit();
     }
 }

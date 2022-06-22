@@ -374,11 +374,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b590d34b14ee14a49bf6cddc65a08f5b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movementSpeed: 4
+  movementSpeed: 5
   jumpForce: 8
-  airMovementMultiplier: 0.75
-  movementSpeedIncrease: 1.1
-  maximumMovementSpeed: 10
+  airMovementMultiplier: 0.625
+  movementSpeedIncrease: 1.0125
+  maximumMovementSpeed: 8
 --- !u!4 &231696806
 Transform:
   m_ObjectHideFlags: 0
@@ -422,8 +422,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1.25, y: 1, z: 0.875}
-  m_Center: {x: 0, y: 0.25, z: 0}
+  m_Size: {x: 1, y: 1, z: 0.75}
+  m_Center: {x: -0.025, y: 0.25, z: 0}
 --- !u!1001 &350637992
 PrefabInstance:
   m_ObjectHideFlags: 0

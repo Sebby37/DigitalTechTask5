@@ -8,8 +8,8 @@ public class WolfMovement : MonoBehaviour
     public float movementSpeed;
     public float jumpForce;
     [Range(0f, 1f)] public float airMovementMultiplier = 0.5f;
-    public float movementSpeedIncrease = 1.05f;
-    public float maximumMovementSpeed = 10;
+    public float movementSpeedIncrease = 1.0125f;
+    public float maximumMovementSpeed = 8;
 
     private Rigidbody rb;
     private Animator animator;
